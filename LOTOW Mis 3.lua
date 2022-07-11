@@ -15,25 +15,21 @@ local iads = require 'DCS-Scripts.utils.IADS'
  [2] Be able to have any aircraft that trespass onto the green zone be escorted
  by TRNC aircraft
 
-[3] Have hostile TMT gps spawn when players enter area of crash (do this with ME triggers?)
+[3]
 
 --]]
 
 local enforcingGps = {--[[insert gpNames of NFZ enforcement groups here]]}
-local TMTAmbush = {--[[insert TMT gps to ambush here]]}
+
 -- [1]
 local noGo = {{00053152, -00293470}, {00017400, -00287523},
  {00029323, -00228633}, {00080672, -00112222},
   {00029749, -00228633}, {00006260, -00223009}, {00011106,-00167628}}
 
-local crashArea = {--[[insert coords of crash area here]]
 
   local function trackPlanes()
-    tasking.noFlyZoneV2(enforcingGps, coalition.side.RED, coalition.side.BLUE, TRNC_all)
-    if utils.coaGpsInZone(coalition.side.BLUE, crashArea, Group.Category.AIRPLANE) or
-    utils.coaGpsInZone(coalition.side.BLUE, crashArea, Group.Category.HELICOPTER) then
-      --spawn TMT--
-
+    tasking.noFlyZonePlyrDetec(--[[TRNC country]], coalition.side.BLUE, TRNC_all)
+      -- If players detected and in zone then turn TRNC hostile
     end
   end
 
@@ -46,7 +42,7 @@ function test.main()
 	{},
 	timer.getTime() + refreshRate
     )
-  iads.runIADS()
+    iads.runIADS()
 end
 
 return test
